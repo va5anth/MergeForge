@@ -4,10 +4,16 @@ import { useState } from "react";
 
 export default function WaitlistForm() {
   const [email, setEmail] = useState("");
-  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [status, setStatus] = useState<"idle" | "loading" | "invalid" | "duplicate" | "success" | "error">("idle");
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!emailRegex.test(email)) {
+        setStatus("invalid");
+        return;
+    }
     setStatus("loading");
 
     const res = await fetch("/api/waitlist", {
@@ -41,7 +47,12 @@ export default function WaitlistForm() {
       >
         {status === "loading" ? "Joining..." : "Join the waitlist"}
       </button>
-
+        {status === "invalid" && (
+        <p className="text-red-400 text-sm pt-1">Please enter a valid email.</p>
+        )}
+     {status === "duplicate" && (
+        <p className="text-yellow-400 text-sm pt-1">You're already on the list.</p>
+      )}
       {status === "success" && (
         <p className="text-emerald-400 text-sm pt-1">You're in!</p>
       )}
