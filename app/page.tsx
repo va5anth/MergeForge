@@ -1,6 +1,6 @@
 // app/page.tsx (Next.js 13+ with App Router)
 // If you're using pages router, export default function Home() in pages/index.tsx
-
+import WaitlistForm from "@/components/WaitListForm";
 export default function Home() {
   return (
     <main className="min-h-screen bg-slate-950 text-slate-50">
@@ -29,7 +29,7 @@ export default function Home() {
           </div>
         </div>
       </section>
-
+    <WaitlistForm />
       {/* Problem */}
       <section className="px-6 py-12 md:py-16 bg-slate-900/40 border-y border-slate-800">
         <div className="max-w-4xl mx-auto space-y-4">
